@@ -1,38 +1,188 @@
-.App {
-  text-align: center;
+html {
+  background: url(https://4kwallpapers.com/images/walls/thumbs_2t/12762.jpg);
+  background-size: cover;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.player-creator {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: space-around;
+}
+
+.step, .info , h1, h2, label {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: fit-content;
+  margin: 10px auto;
+  padding: 15px;
+  border-radius: 10px;
+
+
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.step-1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 800px;
+  border: solid black 2px;
+  margin: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+}
+
+.info {
+  margin-left: 20px;
+  margin-right: 20px;
+  font-size: 12px;
+}
+
+.step{
+  font-weight: bold;
+  font-size: 16px;
+}
+
+label {
+  font-weight: bold;
+  text-align: center;
+}
+
+input, select, button {
+  text-align: center;
+  padding: 5px;
+  margin: 5px;
+}
+
+.create-player-btn {
+  padding: 10px;
+}
+
+.step-2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 950px;
+  height: 800px;
+  border: solid black 2px;
+  border-radius: 5px;
+  margin: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.step-3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 800px;
+  border: solid black 2px;
+  border-radius: 5px;
+  margin: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.player-form{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: fit-content;
+  border: solid black 2px;
+  margin: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 10px;
+}
+
+.player-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 50%;
+  margin: 30px auto;
+  width: 250px;
+  height: 350px;
+  background-color: #1e1e1e;
+  border: solid gold 5px;
+  border-radius: 10px;
+  padding: 15px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  background-image: url(https://admin.sportshackster.com/WallPaperMedia/PlayerWallPaperImage/Kobe-4_63838797002455.5.jpg);
+  background-size: cover;
+  background-position: center -20px, -15px;
+}
+
+.playercard-header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background: rgb(90, 14, 126);
+  padding: 5px;
+  margin: 0;
+  border-bottom: solid gold 2px;
+}
+
+.playercard-header h3 {
+  font-size: 26px;
+  margin: 0;
+}
+
+.playercard-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgb(90, 14, 126);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top: solid gold 2px;
+}
+
+.playercard-footer p {
+  font-size: 16px;
+  font-weight: 500;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.footer-info-wrapper {
+  display: flex;
+  justify-content: space-around;
+  padding: 5px;
+}
+
+.footer-info p {
+  border: solid gold 2px;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.footer-stats-wrapper {
+  display: flex;
+  justify-content: space-around;
+  border-top: solid gold 2px;
+  padding: 5px;
+}
+.footer-stats-wrapper p {
+  font-size: 10px;
+  font-weight: bold;
+  margin: 3px;
 }
