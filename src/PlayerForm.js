@@ -6,21 +6,66 @@ export default function Form() {
     const [position, setPosition] = useState('PG')
     const [height, setHeight] = useState('6\'3')
     const [playerData, setPlayerData] = useState(null)
+    const [skillCaps, setSkillCaps] = useState([30, 30, 30, 30, 30, 30]);
+    
+    const baseStatsByPosition = {
+        PG: [75, 60, 85, 50, 85, 70],
+        SG: [80, 70, 80, 60, 80, 65],
+        SF: [70, 80, 75, 70, 75, 75],
+        PF: [60, 85, 65, 85, 65, 80],
+        C: [50, 90, 60, 90, 55, 85],
+    };
 
-    const handleForm = (event) => {
-        event.preventDefault()
-        setPlayerData({
-            name: name,
-            position: position,
-            height: height,
-        })     
-    }
+    const scalingFactorsByHeight = {
+        "5'8": [1.2, 1.1, 1.1, 0.9, 1.3, 1.3],
+        "5'9": [1.18, 1.1, 1.1, 0.92, 1.28, 1.28],
+        "5'10": [1.16, 1.08, 1.08, 0.94, 1.25, 1.25],
+        "5'11": [1.14, 1.07, 1.07, 0.96, 1.22, 1.22],
+        "6'0": [1.12, 1.05, 1.05, 0.98, 1.2, 1.2],
+        "6'1": [1.1, 1.03, 1.03, 1.0, 1.18, 1.18],
+        "6'2": [1.08, 1.02, 1.02, 1.02, 1.15, 1.15],
+        "6'3": [1.1, 1.0, 1.0, 1.0, 1.1, 1.1],
+        "6'4": [1.05, 0.98, 0.98, 1.03, 1.08, 1.08],
+        "6'5": [1.04, 0.96, 0.96, 1.04, 1.05, 1.05],
+        "6'6": [1.02, 0.95, 0.95, 1.06, 1.03, 1.03],
+        "6'7": [1.0, 0.94, 0.94, 1.08, 1.0, 1.0],
+        "6'8": [0.98, 0.93, 0.93, 1.1, 0.98, 0.98],
+        "6'9": [0.96, 0.9, 0.9, 1.12, 0.95, 0.95],
+        "6'10": [0.94, 0.88, 0.88, 1.14, 0.92, 0.92],
+        "6'11": [0.92, 0.87, 0.87, 1.16, 0.9, 0.9],
+        "7'0": [0.9, 0.85, 0.85, 1.18, 0.88, 0.88],
+        "7'1": [0.88, 0.84, 0.84, 1.2, 0.85, 0.85],
+        "7'2": [0.86, 0.83, 0.83, 1.22, 0.82, 0.82],
+    };    
+
+    const calculateSkillCaps = () => {
+        const baseStats = baseStatsByPosition[position] || [50, 50, 50, 50, 50, 50];
+        const scalingFactors = scalingFactorsByHeight[height] || [1, 1, 1, 1, 1, 1];
+
+        return baseStats.map((baseValue, index) => {
+            const scaledValue = baseValue * scalingFactors[index];
+            return Math.min(99, Math.round(scaledValue)); // Cap each value at 99
+        });
+    };
 
     useEffect(() => {
         if (playerData) {
             console.log("Updated player data:", playerData);
+            calculateSkillCaps();
         }
     }, [playerData]);
+
+    const handleForm = (event) => {
+        event.preventDefault();
+        setPlayerData({
+            name: name,
+            position: position,
+            height: height,
+        });
+
+        const updatedSkillCaps = calculateSkillCaps(); // Calculate updated skill caps
+        setSkillCaps(updatedSkillCaps); // Update skill caps state
+    };
 
     return (
         <div className='player-creator'>
@@ -79,7 +124,7 @@ export default function Form() {
                 </form>
             </div>
             <div className='step-2'>
-                <ChartComponent />
+                <ChartComponent skillCaps={skillCaps}/>
             </div>
             <div className='step-3'>              
                 {playerData && (

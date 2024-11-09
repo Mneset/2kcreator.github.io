@@ -1,5 +1,5 @@
-import React from 'react';
-import { Bar } from 'react-chartjs-2'; // Import the Bar chart component from react-chartjs-2
+import React, { useState } from 'react';
+import { Bar } from 'react-chartjs-2'; 
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,26 +9,35 @@ import {
   Tooltip,
   Legend,
   scales,
-} from 'chart.js'; // Import necessary Chart.js components
+} from 'chart.js'; 
+import dragDataPlugin from 'chartjs-plugin-dragdata';
 
-// Register the required components
 ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  dragDataPlugin
 );
 
-export default function ChartComponent() {
+export default function ChartComponent({ skillCaps }) {
+  const [PlayerSkillRatings, setPlayerSkillRatings] = useState(skillCaps);
 
   const data = {
     labels: ['Shooting', 'Finishing', 'Playmaking', 'Defending', 'Speed', 'Vertical'],
     datasets: [
       {
-        label: 'Attributes', 
-        data: [25, 25, 25, 25, 25, 25], 
+        label: 'Skill Caps', 
+        data: skillCaps,
+        backgroundColor: 'rgba(128, 0, 128, 0.5)', 
+        borderColor: 'gold', 
+        borderWidth: 2,
+      },
+      {
+        label: 'Player Skill Ratings', 
+        data: PlayerSkillRatings, 
         backgroundColor: 'purple', 
         borderColor: 'gold', 
         borderWidth: 2,
@@ -41,11 +50,22 @@ export default function ChartComponent() {
     responsive: true,
     scales: {
         x: {
-            beginAtZero: true,
+            beginAtZero: false,
+            min: 30,
             max: 99,
         }
     },
     plugins: {
+      dragData: {
+        round: 1,
+        dragX: true,
+        onDrag: (e, datasetIndex, index, value) => {
+          const cappedValue = Math.min(value, skillCaps[index]); // Cap value at skill cap
+          const updatedPlayerSkillRatings = [...PlayerSkillRatings];
+          updatedPlayerSkillRatings[index] = cappedValue; // Update specific skill
+          setPlayerSkillRatings(updatedPlayerSkillRatings); // Update state
+        },
+      },
       title: {
         display: true, 
         text: 'Player Skill Ratings',
@@ -53,6 +73,7 @@ export default function ChartComponent() {
       },
     },
   };
+
 
   return <Bar data={data} options={options} />;
 };
