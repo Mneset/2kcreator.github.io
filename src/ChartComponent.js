@@ -9,7 +9,6 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js'; 
-import dragDataPlugin from 'chartjs-plugin-dragdata';
 
 ChartJS.register(
   CategoryScale,
@@ -18,7 +17,6 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  dragDataPlugin
 );
 
 export default function ChartComponent({ skillCaps }) {
@@ -33,6 +31,7 @@ export default function ChartComponent({ skillCaps }) {
         backgroundColor: 'rgba(128, 0, 128, 0.5)', 
         borderColor: 'gold', 
         borderWidth: 2,
+        grouped: false
       },
       {
         label: 'Player Skill Ratings', 
@@ -49,8 +48,7 @@ export default function ChartComponent({ skillCaps }) {
     responsive: true,
     scales: {
         x: {
-            beginAtZero: false,
-            min: 30,
+            beginAtZero: true,
             max: 99,
         },
         y: {
@@ -63,18 +61,7 @@ export default function ChartComponent({ skillCaps }) {
           }
         }
     },
-    plugins: {
-      dragData: {
-        round: 1,
-        dragX: true,
-        onDrag: (e, datasetIndex, index, value) => {
-          const cappedValue = Math.min(value, skillCaps[index]); // Cap value at skill cap
-          const updatedPlayerSkillRatings = [...PlayerSkillRatings];
-          updatedPlayerSkillRatings[index] = cappedValue; // Update specific skill
-          setPlayerSkillRatings(updatedPlayerSkillRatings); // Update state
-        },
-      },
-    },
+    plugins: {},
   };
 
 

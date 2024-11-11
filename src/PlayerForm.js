@@ -143,14 +143,14 @@ export default function Form() {
                             </div>
                             <div className='footer-stats-wrapper'>
                                 <div>
-                                    <p>SHO: 78</p>
-                                    <p>FIN: 89</p>
-                                    <p>PLY: 85</p>
+                                    <p>SHO: {skillCaps[0]}</p>
+                                    <p>FIN: {skillCaps[1]}</p>
+                                    <p>PLY: {skillCaps[2]}</p>
                                 </div>
                                 <div>
-                                    <p>DEF: 67</p>
-                                    <p>SPE: 92</p>
-                                    <p>VER: 86</p>
+                                    <p>DEF: {skillCaps[3]}</p>
+                                    <p>SPE: {skillCaps[4]}</p>
+                                    <p>VER: {skillCaps[5]}</p>
                                 </div>
                             </div>
                         </div>
