@@ -6,7 +6,7 @@ export default function Form() {
     const [position, setPosition] = useState('PG')
     const [height, setHeight] = useState('6\'3')
     const [playerData, setPlayerData] = useState(null)
-    const [skillCaps, setSkillCaps] = useState([30, 30, 30, 30, 30, 30]);
+    const [skillCaps, setSkillCaps] = useState();
     
     const baseStatsByPosition = {
         PG: [75, 60, 85, 50, 85, 70],
@@ -44,13 +44,12 @@ export default function Form() {
 
         return baseStats.map((baseValue, index) => {
             const scaledValue = baseValue * scalingFactors[index];
-            return Math.min(99, Math.round(scaledValue)); // Cap each value at 99
+            return Math.min(99, Math.round(scaledValue));
         });
     };
 
     useEffect(() => {
         if (playerData) {
-            console.log("Updated player data:", playerData);
             calculateSkillCaps();
         }
     }, [playerData]);
@@ -62,9 +61,7 @@ export default function Form() {
             position: position,
             height: height,
         });
-
-        const updatedSkillCaps = calculateSkillCaps(); // Calculate updated skill caps
-        setSkillCaps(updatedSkillCaps); // Update skill caps state
+        setSkillCaps(calculateSkillCaps());
     };
 
     return (
