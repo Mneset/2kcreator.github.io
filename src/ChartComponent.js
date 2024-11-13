@@ -19,19 +19,17 @@ ChartJS.register(
   Legend,
 );
 
-export default function ChartComponent({ skillCaps }) {
-  const [PlayerSkillRatings, setPlayerSkillRatings] = useState(
-    (skillCaps && Array.isArray(skillCaps)) ? skillCaps.map(cap => cap * 0.2) : [0, 0, 0, 0, 0, 0]
-);
+export default function ChartComponent({ skillCaps, PlayerSkillRatings }) {
+  const [updatedSkillRatings, setUpdatedSkillRatings] = useState(PlayerSkillRatings);
 
 useEffect(() => {
   if (skillCaps && Array.isArray(skillCaps)) {
-      setPlayerSkillRatings(skillCaps.map(cap => cap * 0.2));
+      setUpdatedSkillRatings(skillCaps.map(cap => cap * 0.2));
   }
 }, [skillCaps]);
 
   const updateSkillRating = (index, change) => {
-    setPlayerSkillRatings((prevRatings) => {
+    setUpdatedSkillRatings((prevRatings) => {
       const newRatings = [...prevRatings];
       newRatings[index] = Math.min(skillCaps[index], Math.max(0, newRatings[index] + change));
       return newRatings;
@@ -51,7 +49,7 @@ useEffect(() => {
       },
       {
         label: 'Player Skill Ratings', 
-        data: PlayerSkillRatings, 
+        data: updatedSkillRatings, 
         backgroundColor: 'purple', 
         borderColor: 'gold', 
         borderWidth: 2,

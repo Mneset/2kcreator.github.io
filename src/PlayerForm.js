@@ -1,4 +1,4 @@
-import React, { useState, useEffect, } from 'react';
+import React, { useState, useEffect } from 'react';
 import ChartComponent from './ChartComponent';
 
 export default function Form() {
@@ -6,7 +6,8 @@ export default function Form() {
     const [position, setPosition] = useState('PG')
     const [height, setHeight] = useState('6\'3')
     const [playerData, setPlayerData] = useState(null)
-    const [skillCaps, setSkillCaps] = useState();
+    const [skillCaps, setSkillCaps] = useState([]);
+    const [playerSkillRatings, setPlayerSkillRatings] = useState([0, 0, 0, 0, 0, 0]);
     
     const baseStatsByPosition = {
         PG: [75, 60, 85, 50, 85, 70],
@@ -42,17 +43,16 @@ export default function Form() {
         const baseStats = baseStatsByPosition[position] || [50, 50, 50, 50, 50, 50];
         const scalingFactors = scalingFactorsByHeight[height] || [1, 1, 1, 1, 1, 1];
 
-        return baseStats.map((baseValue, index) => {
-            const scaledValue = baseValue * scalingFactors[index];
+        const newSkillCaps = baseStats.map((baseStatsValue, index) => {
+            const scaledValue = baseStatsValue * scalingFactors[index];
             return Math.min(99, Math.round(scaledValue));
         });
-    };
 
-    useEffect(() => {
-        if (playerData) {
-            calculateSkillCaps();
-        }
-    }, [playerData]);
+        setSkillCaps(newSkillCaps);
+
+        const newPlayerSkillRatings = skillCaps.map(cap => Math.round(cap * 0.2));
+        setPlayerSkillRatings(newPlayerSkillRatings);
+    }
 
     const handleForm = (event) => {
         event.preventDefault();
@@ -61,8 +61,19 @@ export default function Form() {
             position: position,
             height: height,
         });
-        setSkillCaps(calculateSkillCaps());
+        calculateSkillCaps()
     };
+
+
+    useEffect(() => {
+        if (playerData) {
+            calculateSkillCaps(); // Trigger the calculation whenever playerData is updated
+        }
+    }, [playerData]);
+
+    useEffect(() => {
+        console.log(playerSkillRatings); // Check the state after it's updated
+    }, [playerSkillRatings])
 
     return (
         <div className='player-creator'>
@@ -121,7 +132,7 @@ export default function Form() {
                 </form>
             </div>
             <div className='step-2'>
-                <ChartComponent skillCaps={skillCaps}/>
+                <ChartComponent skillCaps={skillCaps} PlayerSkillRatings={playerSkillRatings}/>
             </div>
             <div className='step-3'>              
                 {playerData && (
@@ -140,14 +151,14 @@ export default function Form() {
                             </div>
                             <div className='footer-stats-wrapper'>
                                 <div>
-                                    <p>SHO: {skillCaps[0]}</p>
-                                    <p>FIN: {skillCaps[1]}</p>
-                                    <p>PLY: {skillCaps[2]}</p>
+                                    <p>SHO: {playerSkillRatings[0]}</p>
+                                    <p>FIN: {playerSkillRatings[1]}</p>
+                                    <p>PLY: {playerSkillRatings[2]}</p>
                                 </div>
                                 <div>
-                                    <p>DEF: {skillCaps[3]}</p>
-                                    <p>SPE: {skillCaps[4]}</p>
-                                    <p>VER: {skillCaps[5]}</p>
+                                    <p>DEF: {playerSkillRatings[3]}</p>
+                                    <p>SPE: {playerSkillRatings[4]}</p>
+                                    <p>VER: {playerSkillRatings[5]}</p>
                                 </div>
                             </div>
                         </div>
