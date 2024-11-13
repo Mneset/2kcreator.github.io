@@ -21,8 +21,6 @@ h1 {
   margin: 10px auto;
   padding: 15px;
   border-radius: 10px;
-
-
 }
 
 .step-1 {
@@ -126,7 +124,7 @@ input, select, button {
   overflow: hidden;
   background-image: url(https://admin.sportshackster.com/WallPaperMedia/PlayerWallPaperImage/Kobe-4_63838797002455.5.jpg);
   background-size: cover;
-  background-position: center -20px, -15px;
+  background-position: center -30px, -20px;
 }
 
 .playercard-header {
@@ -154,12 +152,6 @@ input, select, button {
   border-top: solid gold 2px;
 }
 
-.playercard-footer p {
-  font-size: 16px;
-  font-weight: 500;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
-}
-
 .footer-info-wrapper {
   display: flex;
   justify-content: space-around;
@@ -171,7 +163,7 @@ input, select, button {
   border-radius: 5px;
   padding: 5px;
   margin: 5px;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: bold;
 }
 
@@ -182,7 +174,7 @@ input, select, button {
   padding: 5px;
 }
 .footer-stats-wrapper p {
-  font-size: 10px;
+  font-size: 14px;
   font-weight: bold;
   margin: 3px;
 }

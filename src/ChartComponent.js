@@ -19,22 +19,20 @@ ChartJS.register(
   Legend,
 );
 
-export default function ChartComponent({ skillCaps, PlayerSkillRatings }) {
+export default function ChartComponent({ skillCaps, PlayerSkillRatings, updateSkillRating }) {
   const [updatedSkillRatings, setUpdatedSkillRatings] = useState(PlayerSkillRatings);
 
-useEffect(() => {
-  if (skillCaps && Array.isArray(skillCaps)) {
-      setUpdatedSkillRatings(skillCaps.map(cap => cap * 0.2));
-  }
-}, [skillCaps]);
+  const handleIncrease = (index) => {
+    updateSkillRating(index, 1);
+};
 
-  const updateSkillRating = (index, change) => {
-    setUpdatedSkillRatings((prevRatings) => {
-      const newRatings = [...prevRatings];
-      newRatings[index] = Math.min(skillCaps[index], Math.max(0, newRatings[index] + change));
-      return newRatings;
-    });
-  };
+const handleDecrease = (index) => {
+    updateSkillRating(index, -1);
+}; 
+
+useEffect(() => {
+  setUpdatedSkillRatings(PlayerSkillRatings);
+}, [PlayerSkillRatings])
 
   const data = {
     labels: ['Shooting', 'Finishing', 'Playmaking', 'Defending', 'Speed', 'Vertical'],
@@ -90,21 +88,21 @@ useEffect(() => {
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '500px' }}>
-      <div>
-        <button className='increaseBtn' onClick={() => updateSkillRating(0, 1)}>Increase Shooting</button>
-        <button className='increaseBtn' onClick={() => updateSkillRating(1, 1)}>Increase Finishing</button>
-        <button className='increaseBtn' onClick={() => updateSkillRating(2, 1)}>Increase Playmaking</button>
-        <button className='increaseBtn' onClick={() => updateSkillRating(3, 1)}>Increase Defending</button>
-        <button className='increaseBtn' onClick={() => updateSkillRating(4, 1)}>Increase Speed</button>
-        <button className='increaseBtn' onClick={() => updateSkillRating(5, 1)}>Increase Vertical</button>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+        <button className='increaseBtn' onClick={() => handleIncrease(0, 1)}>Increase Shooting</button>
+        <button className='increaseBtn' onClick={() => handleIncrease(1, 1)}>Increase Finishing</button>
+        <button className='increaseBtn' onClick={() => handleIncrease(2, 1)}>Increase Playmaking</button>
+        <button className='increaseBtn' onClick={() => handleIncrease(3, 1)}>Increase Defending</button>
+        <button className='increaseBtn' onClick={() => handleIncrease(4, 1)}>Increase Speed</button>
+        <button className='increaseBtn' onClick={() => handleIncrease(5, 1)}>Increase Vertical</button>
       </div>
-      <div>
-        <button className='decreaseBtn' onClick={() => updateSkillRating(0, -1)}>Decrease Shooting</button>
-        <button className='decreaseBtn' onClick={() => updateSkillRating(1, -1)}>Decrease Finishing</button>
-        <button className='decreaseBtn' onClick={() => updateSkillRating(2, -1)}>Decrease Playmaking</button>
-        <button className='decreaseBtn' onClick={() => updateSkillRating(3, -1)}>Decrease Defending</button>
-        <button className='decreaseBtn' onClick={() => updateSkillRating(4, -1)}>Decrease Speed</button>
-        <button className='decreaseBtn' onClick={() => updateSkillRating(5, -1)}>Decrease Vertical</button>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+        <button className='decreaseBtn' onClick={() => handleDecrease(0, -1)}>Decrease Shooting</button>
+        <button className='decreaseBtn' onClick={() => handleDecrease(1, -1)}>Decrease Finishing</button>
+        <button className='decreaseBtn' onClick={() => handleDecrease(2, -1)}>Decrease Playmaking</button>
+        <button className='decreaseBtn' onClick={() => handleDecrease(3, -1)}>Decrease Defending</button>
+        <button className='decreaseBtn' onClick={() => handleDecrease(4, -1)}>Decrease Speed</button>
+        <button className='decreaseBtn' onClick={() => handleDecrease(5, -1)}>Decrease Vertical</button>
       </div>
       
       <Bar data={data} options={options} />

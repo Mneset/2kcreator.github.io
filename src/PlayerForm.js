@@ -50,9 +50,9 @@ export default function Form() {
 
         setSkillCaps(newSkillCaps);
 
-        const newPlayerSkillRatings = skillCaps.map(cap => Math.round(cap * 0.2));
+        const newPlayerSkillRatings = newSkillCaps.map(cap => Math.round(cap * 0.2));
         setPlayerSkillRatings(newPlayerSkillRatings);
-    }
+    };
 
     const handleForm = (event) => {
         event.preventDefault();
@@ -64,16 +64,19 @@ export default function Form() {
         calculateSkillCaps()
     };
 
+    const updateSkillRating = (index, change) => {
+        setPlayerSkillRatings((prevRatings) => {
+          const newRatings = [...prevRatings];
+          newRatings[index] = Math.min(skillCaps[index], Math.max(0, newRatings[index] + change));
+          return newRatings;
+        });
+      };
 
     useEffect(() => {
         if (playerData) {
-            calculateSkillCaps(); // Trigger the calculation whenever playerData is updated
+            calculateSkillCaps();
         }
     }, [playerData]);
-
-    useEffect(() => {
-        console.log(playerSkillRatings); // Check the state after it's updated
-    }, [playerSkillRatings])
 
     return (
         <div className='player-creator'>
@@ -91,6 +94,7 @@ export default function Form() {
                 <input
                     value={name}
                     onChange={e => setName(e.target.value)} placeholder='Enter a player name'
+                    required
                 />
                 <label>Position:</label>
                 <select
@@ -132,7 +136,7 @@ export default function Form() {
                 </form>
             </div>
             <div className='step-2'>
-                <ChartComponent skillCaps={skillCaps} PlayerSkillRatings={playerSkillRatings}/>
+                <ChartComponent skillCaps={skillCaps} PlayerSkillRatings={playerSkillRatings} updateSkillRating={updateSkillRating}/>
             </div>
             <div className='step-3'>              
                 {playerData && (
