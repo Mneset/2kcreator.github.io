@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ChartComponent from './ChartComponent';
+import BadgeComponent from './BadgeComponent'
+
 
 export default function Form() {
     const [name, setName] = useState("")
@@ -166,9 +168,12 @@ export default function Form() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>                   
                 )}
-            </div>
+                <div className='badges-section'>
+                    <BadgeComponent playerSkillRatings={playerSkillRatings} />
+                </div>
+            </div>       
         </div>
     )
 }

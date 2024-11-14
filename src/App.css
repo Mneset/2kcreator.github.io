@@ -193,3 +193,32 @@ input, select, button {
   background-color: rgba(255, 0, 0, 0.3);
   color: white;
 }
+
+.badge-img {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.info-box {
+  visibility: hidden;
+  width: 200px;
+  background-color: rgba(0, 0, 0, 0.8); 
+  color: white;
+  text-align: center;
+  border-radius: 8px;
+  padding: 10px;
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.badge-img:hover + .info-box {
+  visibility: visible;
+  opacity: 1;
+}
