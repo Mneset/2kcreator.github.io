@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2'; 
+import dragDataPlugin from 'chartjs-plugin-dragdata';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js'; 
+import { log10 } from 'chart.js/helpers';
 
 ChartJS.register(
   CategoryScale,
@@ -17,6 +19,7 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
+  dragDataPlugin,
 );
 
 export default function ChartComponent({ skillCaps, PlayerSkillRatings, updateSkillRating }) {
@@ -43,7 +46,8 @@ useEffect(() => {
         backgroundColor: 'rgba(128, 0, 128, 0.5)', 
         borderColor: 'gold', 
         borderWidth: 2,
-        grouped: false
+        grouped: false,
+        dragData: false
       },
       {
         label: 'Player Skill Ratings', 
@@ -51,7 +55,8 @@ useEffect(() => {
         backgroundColor: 'purple', 
         borderColor: 'gold', 
         borderWidth: 2,
-        grouped: false
+        grouped: false,
+        dragData: true
       },
       {
         label: 'Max Ratings', 
@@ -59,7 +64,8 @@ useEffect(() => {
         backgroundColor: 'black', 
         borderColor: 'gold', 
         borderWidth: 2,
-        grouped: false
+        grouped: false,
+        dragData: false
       }
     ],
   };
@@ -67,10 +73,15 @@ useEffect(() => {
   const options = {
     indexAxis: "y",
     responsive: true,
+    dragData: true,
     scales: {
         x: {
             beginAtZero: true,
             max: 99,
+            ticks: {
+              max: 99,
+              min: 0
+            }
         },
         y: {
           ticks: {
@@ -79,10 +90,24 @@ useEffect(() => {
               weight: 'bold'
             },
             color: 'gold'
-          }
+          },
         }
     },
-    plugins: {},
+    plugins: {
+      tooltip: {
+        enabled: false
+      },
+      dragData: {
+        round: 0,
+        dragX: true,
+        onDragEnd: (event, datasetIndex, index) => {
+          if (datasetIndex === 1 && PlayerSkillRatings[index] > skillCaps[index]) {
+            PlayerSkillRatings[index] = skillCaps[index]
+          }
+          updateSkillRating()
+        }
+      },
+    },
   };
 
 
